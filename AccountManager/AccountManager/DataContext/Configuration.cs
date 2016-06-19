@@ -1,3 +1,5 @@
+using AccountManager.Entities;
+
 namespace AccountManager.DataContext
 {
     using System;
@@ -5,7 +7,7 @@ namespace AccountManager.DataContext
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AccountManager.DataContext.FinanceDatabase>
+    internal sealed class Configuration : DbMigrationsConfiguration<FinanceDatabase>
     {
         public Configuration()
         {
@@ -13,20 +15,19 @@ namespace AccountManager.DataContext
             MigrationsDirectory = @"DataContext";
         }
 
-        protected override void Seed(AccountManager.DataContext.FinanceDatabase context)
+        protected override void Seed(FinanceDatabase context)
         {
-            //  This method will be called after migrating to the latest version.
+            context.Accounts.RemoveRange(context.Accounts);
+            context.Earnings.RemoveRange(context.Earnings);
+            context.Spendings.RemoveRange(context.Spendings);
+            context.Users.RemoveRange(context.Users);
+            context.SaveChanges();
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Users.Add(new User {Name = "Testuser"});
+            context.Accounts.Add(new Account {Name = "Konto1"});
+            context.SaveChanges();
+            context.Accounts.First().User = context.Users.First();
+            context.SaveChanges();
         }
     }
 }
