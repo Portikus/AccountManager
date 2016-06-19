@@ -102,6 +102,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="DataContext\201606190832013_InitialCreate.cs" />
+    <Compile Include="DataContext\201606190832013_InitialCreate.Designer.cs">
+      <DependentUpon>201606190832013_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Configuration.cs" />
+    <Compile Include="DataContext\FinanceDatabase.cs" />
+    <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\Earning.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Spending.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
@@ -122,10 +133,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="DataContext\201606190832013_InitialCreate.resx">
+      <DependentUpon>201606190832013_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Entities\EnitiesClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -136,6 +151,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DataContext\DatabaseMigration.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

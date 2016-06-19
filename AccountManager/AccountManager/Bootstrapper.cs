@@ -15,7 +15,7 @@ namespace AccountManager
 
         protected override DependencyObject CreateShell()
         {
-            return new Shell(); 
+            return new Views.Shell(); 
         }
 
         protected override void InitializeShell()

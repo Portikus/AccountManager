@@ -1,0 +1,17 @@
+﻿//If no Configuration-file exist
+	Enable-Migrations -ContextTypeName FinanceDatabase -MigrationsDirectory DataContext -Force
+	Add-Migration -ConfigurationTypeName AccountManager.DataContext.Configuration "InitialCreate" -Force
+	Update-Database -ConfigurationTypeName AccountManager.DataContext.Configuration -Verbose
+
+//If no InitialCreate exist 
+	Add-Migration -ConfigurationTypeName AccountManager.DataContext.Configuration "InitialCreate" -Force
+	Update-Database -ConfigurationTypeName AccountManager.DataContext.Configuration -Verbose
+
+//If you want to update or add the Database
+	Update-Database -ConfigurationTypeName AccountManager.DataContext.Configuration -Verbose
+
+
+//If the entities behind have changed
+	Update-Database -TargetMigration $InitialDatabase
+	Add-Migration -ConfigurationTypeName AccountManager.DataContext.Configuration "InitialCreate" -Force
+	Update-Database -ConfigurationTypeName AccountManager.DataContext.Configuration -Verbose
