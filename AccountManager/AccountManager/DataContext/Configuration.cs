@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AccountManager.Entities;
 
 namespace AccountManager.DataContext
@@ -24,9 +25,19 @@ namespace AccountManager.DataContext
             context.SaveChanges();
 
             context.Users.Add(new User {Name = "Testuser"});
+
             context.Accounts.Add(new Account {Name = "Konto1"});
+
+            context.Earnings.Add(new Earning {Name = "Gehalt", Value = 1000});
+            context.Earnings.Add(new Earning {Name = "Miete", Value = 300});
+
+            context.Spendings.Add(new Spending{Name = "Haushalt", Value = 500});
+            context.Spendings.Add(new Spending{Name = "Tanken", Value = 150});
+
             context.SaveChanges();
             context.Accounts.First().User = context.Users.First();
+            context.Accounts.First().Spendings = new List<Spending>(context.Spendings);
+            context.Accounts.First().Earnings = new List<Earning>(context.Earnings);
             context.SaveChanges();
         }
     }

@@ -13,16 +13,10 @@ namespace AccountManager.DataContext
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Earning_Id = c.Int(),
-                        Spending_Id = c.Int(),
                         User_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Earnings", t => t.Earning_Id)
-                .ForeignKey("dbo.Spendings", t => t.Spending_Id)
                 .ForeignKey("dbo.Users", t => t.User_Id)
-                .Index(t => t.Earning_Id)
-                .Index(t => t.Spending_Id)
                 .Index(t => t.User_Id);
             
             CreateTable(
@@ -30,18 +24,26 @@ namespace AccountManager.DataContext
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Value = c.Int(nullable: false),
+                        Value = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Name = c.String(),
+                        Account_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Accounts", t => t.Account_Id)
+                .Index(t => t.Account_Id);
             
             CreateTable(
                 "dbo.Spendings",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Value = c.Int(nullable: false),
+                        Value = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Name = c.String(),
+                        Account_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Accounts", t => t.Account_Id)
+                .Index(t => t.Account_Id);
             
             CreateTable(
                 "dbo.Users",
@@ -57,11 +59,11 @@ namespace AccountManager.DataContext
         public override void Down()
         {
             DropForeignKey("dbo.Accounts", "User_Id", "dbo.Users");
-            DropForeignKey("dbo.Accounts", "Spending_Id", "dbo.Spendings");
-            DropForeignKey("dbo.Accounts", "Earning_Id", "dbo.Earnings");
+            DropForeignKey("dbo.Spendings", "Account_Id", "dbo.Accounts");
+            DropForeignKey("dbo.Earnings", "Account_Id", "dbo.Accounts");
+            DropIndex("dbo.Spendings", new[] { "Account_Id" });
+            DropIndex("dbo.Earnings", new[] { "Account_Id" });
             DropIndex("dbo.Accounts", new[] { "User_Id" });
-            DropIndex("dbo.Accounts", new[] { "Spending_Id" });
-            DropIndex("dbo.Accounts", new[] { "Earning_Id" });
             DropTable("dbo.Users");
             DropTable("dbo.Spendings");
             DropTable("dbo.Earnings");
