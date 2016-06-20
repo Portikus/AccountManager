@@ -11,16 +11,16 @@
         Height="350"
         d:DataContext="{d:DesignInstance viewModels:ShellViewModel}"
         mc:Ignorable="d">
-    <DockPanel>
-        <ComboBox Name="AccountBox"
-                  DockPanel.Dock="Top"
-                  ItemsSource="{Binding Accounts}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type entities:Account}">
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <views:AccountView DataContext="{Binding AccountViewModel}" />
-    </DockPanel>
+    <TabControl ItemsSource="{Binding AccountViewModels}">
+        <TabControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
+                <TextBlock Text="{Binding Account.Name}" />
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+            <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
+                <views:AccountView />
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+    </TabControl>
 </Window>

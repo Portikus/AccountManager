@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,17 +14,28 @@ namespace AccountManager.ViewModels
 {
     public class ShellViewModel : BindableBase
     {
-        public ObservableCollection<Account> Accounts { get; set; }
+        public ObservableCollection<AccountViewModel> AccountViewModels { get; set; }
 
         public AccountViewModel AccountViewModel { get; set; }
 
         private readonly FinanceDatabase _database;
+        private readonly IUnityContainer _container;
 
-        public ShellViewModel(FinanceDatabase database, AccountViewModel accountViewModel)
+        public ShellViewModel(FinanceDatabase database, IUnityContainer container)
         {
-            AccountViewModel = accountViewModel;
             _database = database;
-            Accounts = new ObservableCollection<Account>(_database.Accounts);
+            _container = container;
+            AccountViewModels = new ObservableCollection<AccountViewModel>(CreateAccountViewModels(_database.Accounts));
+        }
+
+        private IEnumerable<AccountViewModel> CreateAccountViewModels(IEnumerable<Account> accounts)
+        {
+            foreach (var account in accounts)
+            {
+                var vm = _container.Resolve<AccountViewModel>();
+                vm.Account = account;
+                yield return vm;
+            }
         }
     }
 }

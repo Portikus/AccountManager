@@ -10,14 +10,14 @@ namespace AccountManager.ViewModels
 {
     public class AccountViewModel : BindableBase
     {
-        private Account _selectedAccount;
+        private Account _account;
 
-        public Account SelectedAccount
+        public Account Account
         {
-            get { return _selectedAccount; }
+            get { return _account; }
             set
             {
-                _selectedAccount = value;
+                _account = value;
                 OnPropertyChanged();
             }
         }

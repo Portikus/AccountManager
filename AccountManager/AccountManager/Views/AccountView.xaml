@@ -9,9 +9,34 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <Grid>
-        <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedAccount.Name, StringFormat=Besitzer : {0}}" />
-        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding SelectedAccount.Earnings}" />
-        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding SelectedAccount.Spendings}" />
+    <Grid DockPanel.Dock="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   Text="{Binding Account.Name,
+                                  StringFormat=Besitzer : {0}}" />
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   Text="Einnahmen" />
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   HorizontalAlignment="Center"
+                   Text="Ausgaben" />
+        <DataGrid Grid.Row="2"
+                  Grid.Column="0"
+                  ItemsSource="{Binding Account.Earnings}" />
+        <DataGrid Grid.Row="2"
+                  Grid.Column="1"
+                  ItemsSource="{Binding Account.Spendings}" />
     </Grid>
 </UserControl>
