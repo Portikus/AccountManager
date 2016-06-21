@@ -7,20 +7,21 @@
         xmlns:viewModels="clr-namespace:AccountManager.ViewModels"
         xmlns:views="clr-namespace:AccountManager.Views"
         Title="AccountManager"
-        Width="525"
-        Height="350"
         d:DataContext="{d:DesignInstance viewModels:ShellViewModel}"
+        WindowState="Maximized"
         mc:Ignorable="d">
-    <TabControl ItemsSource="{Binding AccountViewModels}">
-        <TabControl.ItemTemplate>
-            <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
-                <TextBlock Text="{Binding Account.Name}" />
-            </DataTemplate>
-        </TabControl.ItemTemplate>
-        <TabControl.ContentTemplate>
-            <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
-                <views:AccountView />
-            </DataTemplate>
-        </TabControl.ContentTemplate>
+    <TabControl>
+        <TabItem Header="Übersicht">
+            <TextBlock Text="TODO inhalt hinzufügen" />
+        </TabItem>
+        <TabItem Header="Kontos">
+            <views:AccountPageView DataContext="{Binding AccountPageViewModel}" />
+        </TabItem>
+        <TabItem Header="Besitzer">
+            <TextBlock Text="TODO inhalt hinzufügen" />
+        </TabItem>
+        <TabItem Header="Kontos verwalten">
+            <views:ManageAccountPageView DataContext="{Binding AccountPageViewModel}" />
+        </TabItem>
     </TabControl>
 </Window>

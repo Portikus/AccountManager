@@ -26,10 +26,14 @@ namespace AccountManager.DataContext
                         Id = c.Int(nullable: false, identity: true),
                         Value = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Name = c.String(),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
+                        SenderAccount_Id = c.Int(),
                         Account_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Accounts", t => t.SenderAccount_Id)
                 .ForeignKey("dbo.Accounts", t => t.Account_Id)
+                .Index(t => t.SenderAccount_Id)
                 .Index(t => t.Account_Id);
             
             CreateTable(
@@ -39,10 +43,14 @@ namespace AccountManager.DataContext
                         Id = c.Int(nullable: false, identity: true),
                         Value = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Name = c.String(),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
+                        RecivingAccount_Id = c.Int(),
                         Account_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Accounts", t => t.RecivingAccount_Id)
                 .ForeignKey("dbo.Accounts", t => t.Account_Id)
+                .Index(t => t.RecivingAccount_Id)
                 .Index(t => t.Account_Id);
             
             CreateTable(
@@ -60,9 +68,13 @@ namespace AccountManager.DataContext
         {
             DropForeignKey("dbo.Accounts", "User_Id", "dbo.Users");
             DropForeignKey("dbo.Spendings", "Account_Id", "dbo.Accounts");
+            DropForeignKey("dbo.Spendings", "RecivingAccount_Id", "dbo.Accounts");
             DropForeignKey("dbo.Earnings", "Account_Id", "dbo.Accounts");
+            DropForeignKey("dbo.Earnings", "SenderAccount_Id", "dbo.Accounts");
             DropIndex("dbo.Spendings", new[] { "Account_Id" });
+            DropIndex("dbo.Spendings", new[] { "RecivingAccount_Id" });
             DropIndex("dbo.Earnings", new[] { "Account_Id" });
+            DropIndex("dbo.Earnings", new[] { "SenderAccount_Id" });
             DropIndex("dbo.Accounts", new[] { "User_Id" });
             DropTable("dbo.Users");
             DropTable("dbo.Spendings");

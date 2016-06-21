@@ -11,8 +11,8 @@
              mc:Ignorable="d">
     <Grid DockPanel.Dock="Top">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,7 +22,7 @@
         <TextBlock Grid.Row="0"
                    Grid.ColumnSpan="2"
                    HorizontalAlignment="Center"
-                   Text="{Binding Account.Name,
+                   Text="{Binding Account.User.Name,
                                   StringFormat=Besitzer : {0}}" />
         <TextBlock Grid.Row="1"
                    Grid.Column="0"
